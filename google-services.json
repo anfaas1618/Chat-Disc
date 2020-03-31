@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "582815110556",
+    "firebase_url": "https://chatdisc-91d62.firebaseio.com",
+    "project_id": "chatdisc-91d62",
+    "storage_bucket": "chatdisc-91d62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582815110556:android:fc380b15b17d349b36a459",
+        "android_client_info": {
+          "package_name": "cl.ucn.disc.dsm.chatdisc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582815110556-dir1edg06r23okcbvi02tv1lhib24nan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG2AAjIfDofOfDAOew2M6S2eRXAKcGSJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582815110556-dir1edg06r23okcbvi02tv1lhib24nan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
