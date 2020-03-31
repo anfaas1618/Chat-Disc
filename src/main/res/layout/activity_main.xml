@@ -9,14 +9,16 @@
   <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints">
+    tools:ignore="MissingConstraints"
+    android:background="@color/colorPrimaryDark">
 
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="349dp"
       android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryDark"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-      >
+      app:popupTheme="@style/MenuStyle">
 
       <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="30dp"
@@ -53,7 +55,8 @@
     android:id="@+id/view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_scrollInterpolator="@string/appbar_scrolling_view_behavior"/>
+    app:layout_scrollInterpolator="@string/appbar_scrolling_view_behavior"
+     />
 
 
 

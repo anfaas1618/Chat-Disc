@@ -56,13 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
         String txt_email = email.getText().toString();
         String txt_password = password.getText().toString();
 
+        //these are the restrictions you have when you want to register the data
+
         if(TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
           Toast.makeText(RegisterActivity.this, "All Filed are required", Toast.LENGTH_SHORT).show();
         }else if(txt_password.length()< 6) {
           Toast.makeText(RegisterActivity.this, "password must be at least 6 characters",
               Toast.LENGTH_SHORT).show();
 
-          //else poner la restriccion si es igual en la base de datos 2 15:21
+
         }else{
           register(txt_username, txt_email, txt_password);
         }
@@ -74,7 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
 
   }
 
-  private void register(final String username, String email, String password){
+
+  private void register(final String username, String email, String password){  //This class add the user in the DataBase
 
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
