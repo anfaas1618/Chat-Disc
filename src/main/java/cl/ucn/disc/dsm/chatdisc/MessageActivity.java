@@ -125,11 +125,13 @@ public class MessageActivity extends AppCompatActivity {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         final String userid = intent.getStringExtra("userid");
+        String timestamp = String.valueOf(System.currentTimeMillis());
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message" , message);
+        hashMap.put("timestamp", timestamp);
 
         reference.child("Chats").push().setValue(hashMap);
 

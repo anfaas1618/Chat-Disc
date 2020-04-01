@@ -23,6 +23,16 @@
     android:background="@drawable/background_left"/>
 
   <TextView
+    android:id="@+id/timeTv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="02/03/2019 05:59PM"
+    android:layout_toRightOf="@id/show_message"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="20dp"
+    android:textColor="@color/timeColor"
+    android:textSize="12sp" />
+  <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/txt_seen"

@@ -2,11 +2,11 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:padding="8dp"
+  android:padding="10dp"
   android:layout_height="wrap_content">
 
   <RelativeLayout
-    android:layout_width="300dp"
+    android:layout_width="280dp"
     android:layout_alignParentEnd="true"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true">
@@ -27,7 +27,8 @@
       android:textSize="18sp"
       android:textColor="#fff"
       android:padding="8dp"
-      android:layout_alignParentRight="true" />
+      android:layout_alignParentRight="true"/>
+
 
     <TextView
       android:layout_width="wrap_content"
@@ -38,5 +39,14 @@
       android:layout_alignParentEnd="true" />
 
   </RelativeLayout>
+  <TextView
+    android:id="@+id/timeTv"
+    android:layout_width="54dp"
+    android:layout_height="41dp"
+    android:layout_marginBottom="-20dp"
+    android:layout_marginRight="240dp"
+    android:text="02/03/2019 05:59PM"
+    android:textColor="@color/timeColor"
+    android:textSize="10sp" />
 
 </RelativeLayout>

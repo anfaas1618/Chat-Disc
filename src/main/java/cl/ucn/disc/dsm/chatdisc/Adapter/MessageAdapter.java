@@ -1,6 +1,7 @@
 package cl.ucn.disc.dsm.chatdisc.Adapter;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import cl.ucn.disc.dsm.chatdisc.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
@@ -48,8 +51,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
   public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
 
     Chat chat = mChat.get(position);
+    String timeStamp = mChat.get(position).getTimestamp();
+
+    Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+    cal.setTimeInMillis(Long.parseLong(timeStamp));
+    String dateTime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();
+
+
+
 
     holder.show_message.setText(chat.getMessage());
+    holder.timeTv.setText(dateTime);
 
     if (imageurl.equals("default")){
       holder.profile_image.setImageResource(R.mipmap.ic_launcher);
@@ -79,6 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public TextView show_message;
     public ImageView profile_image;
     public TextView txt_seen;
+    public TextView timeTv;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -86,6 +99,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
       show_message = itemView.findViewById(R.id.show_message);
       profile_image = itemView.findViewById(R.id.profile_image);
       txt_seen = itemView.findViewById(R.id.txt_seen);
+      timeTv = itemView.findViewById(R.id.timeTv);
     }
   }
 
