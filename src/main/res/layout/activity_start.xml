@@ -23,25 +23,36 @@
   android:gravity="center"
   android:orientation="vertical"
   android:layout_height="match_parent"
+  android:background="@color/colorPrimaryDark"
   tools:context=".StartActivity">
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Chat App"
-    android:textSize="25sp"
+    android:text="ChatDisc App"
+    android:id="@+id/chatapp"
+    android:textSize="40sp"
     android:textStyle="bold"/>
 
+  <ImageButton
+    android:id="@+id/cha"
+    android:layout_width="92dp"
+    android:layout_height="84dp"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/ic_action_chat" />
   <Button
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="85dp"
     android:layout_marginTop="100dp"
     android:text="login" />
-
   <Button
     android:id="@+id/register"
     android:layout_width="match_parent"
     android:layout_height="85dp"
-    android:text="register" />
+    android:text="register"
+    android:layout_marginBottom="90sp"/>
+
+
 
 </LinearLayout>
