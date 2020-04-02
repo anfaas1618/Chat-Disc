@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,16 +53,23 @@ import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
 
+    //views
     CircleImageView profile_image;
     TextView username;
 
+    //FireBase
     FirebaseUser fuser;
     DatabaseReference reference;
 
+    //Button
     ImageButton btn_send;
+
     EditText text_send;
 
+    //MessageAdapter class
     MessageAdapter messageAdapter;
+
+    //List
     List<Chat> mchat;
 
     RecyclerView recyclerView;
@@ -70,14 +81,18 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
+        //init views
         Toolbar toolbar = findViewById(R.id.toolbar);
+        //set toolbar
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent( MessageActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
             }
         });
@@ -122,7 +137,7 @@ public class MessageActivity extends AppCompatActivity {
                 if (user.getImageURL().equals("default")){
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_image);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
 
                 readMesagges(fuser.getUid(),userid, user.getImageURL());
@@ -201,4 +216,27 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    private void status(String status){
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    //if is online
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    //if is offline
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }
+

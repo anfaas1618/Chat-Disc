@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +35,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import cl.ucn.disc.dsm.chatdisc.Fragments.ChatsFragment;
+import cl.ucn.disc.dsm.chatdisc.Fragments.ProfileFragment;
 import cl.ucn.disc.dsm.chatdisc.Fragments.UsersFragment;
 import cl.ucn.disc.dsm.chatdisc.Model.User;
 import com.bumptech.glide.Glide;
@@ -44,12 +49,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+  //views
   CircleImageView profile_image;
   TextView username;
 
+  //Declare am instance of FirebaseUser
   FirebaseUser firebaseUser;
   DatabaseReference reference;
 
@@ -58,18 +66,19 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    //action bar
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     getSupportActionBar().setTitle("");
 
+    //Init
     profile_image = findViewById(R.id.profile_image);
     username = findViewById(R.id.username);
 
+
+    //fireBase Conection
     firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-
-
 
 
     reference.addValueEventListener(new ValueEventListener(){
@@ -97,37 +106,37 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager =findViewById(R.id.view_pager);
 
     ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
+    //View pager Chat
     viewPagerAdapter.addFragment(new ChatsFragment(), " Chats");
+    //View pager User
     viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+    //View pager Profile
+    viewPagerAdapter.addFragment(new ProfileFragment(), "Profile");
 
     viewPager.setAdapter(viewPagerAdapter);
 
     tabLayout.setupWithViewPager(viewPager);
-
   }
 
-
-
-
   @Override
+  /*Inflate options menu */
   public boolean onCreateOptionsMenu(Menu menu) {
+    //Inflating menu
     getMenuInflater().inflate(R.menu.menu, menu);
     return true;
   }
 
-  //base de datos logout 3 14:41
-
-
+  /* Handle menu items clicks */
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()){
-
+      //if press logout button
       case  R.id.logout:
         FirebaseAuth.getInstance().signOut();
         //warning podria crashear por culpa de esto,tratar de cambiar
         startActivity(new Intent(MainActivity.this, StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         return true;
+        //return StartActivity
     }
 
     return false;
@@ -143,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
      this.titles = new ArrayList<>();
    }
 
-
    @Override
    public Fragment getItem(int position) {
      return fragments.get(position);
@@ -157,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
    public void addFragment(Fragment fragment, String title) {
      fragments.add(fragment);
      titles.add(title);
-
-
    }
 
    @Nullable
@@ -168,4 +174,26 @@ public class MainActivity extends AppCompatActivity {
    }
  }
 
+  //If User is On status is online, if User is off status offline
+  private void status(String status){
+    reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+    //Using HashMap
+    HashMap<String, Object> hashMap = new HashMap<>();
+    //Put Info in HashMap
+    hashMap.put("status", status);
+
+    reference.updateChildren(hashMap);
+  }
+  //Status Online
+  @Override
+  protected void onResume() {
+    super.onResume();
+    status("online");
+  }
+  //Status Offline
+  @Override
+  protected void onPause() {
+    super.onPause();
+    status("offline");
+  }
 }
