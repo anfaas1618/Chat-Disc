@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc.Fragments;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
@@ -63,9 +67,11 @@ public class ProfileFragment extends Fragment {
     CircleImageView image_profile;
     TextView username;
 
+    //Firebase
     DatabaseReference reference;
     FirebaseUser fuser;
 
+    //Storage
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
     private Uri imageUri;
@@ -78,11 +84,12 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        //reference whit the layouts
         image_profile = view.findViewById(R.id.profile_image);
         username = view.findViewById(R.id.username);
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
-
+        //init FireBase
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
@@ -90,11 +97,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                //Set Text Username
                 username.setText(user.getUsername());
+                //if user have the default image profile
                 if (user.getImageURL().equals("default")){
+                    //Default image profile
                     image_profile.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Glide.with(getContext()).load(user.getImageURL()).into(image_profile);
+                    //If user have another image profile
+                    if (isAdded()) {
+                        Glide.with(getContext()).load(user.getImageURL()).into(image_profile);
+                    }
                 }
             }
 
@@ -103,7 +116,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
+        //Click Image Profile to change Photo Profile
         image_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +127,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    //Pick a image
     private void openImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -126,7 +140,7 @@ public class ProfileFragment extends Fragment {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-
+    //Upload image method
     private void uploadImage(){
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setMessage("Uploading");
@@ -184,9 +198,11 @@ public class ProfileFragment extends Fragment {
             && data != null && data.getData() != null){
             imageUri = data.getData();
 
+            //If the upload is delayed
             if (uploadTask != null && uploadTask.isInProgress()){
                 Toast.makeText(getContext(), "Upload in preogress", Toast.LENGTH_SHORT).show();
             } else {
+                //Upload the image
                 uploadImage();
             }
         }
