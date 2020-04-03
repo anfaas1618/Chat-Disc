@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc.Adapter;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -55,6 +59,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
   @NonNull
   @Override
   public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    //Inflate layouts: row_chat_left.xml for receiver, row_chat_right.xml fir sender
     if (viewType == MSG_TYPE_RIGHT) {
       View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
       return new MessageAdapter.ViewHolder(view);
@@ -66,17 +71,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
   @Override
   public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
-
+    //get data
     Chat chat = mChat.get(position);
     String timeStamp = mChat.get(position).getTimestamp();
 
+    //convert time stamp to dd/mm/yyyy hh:mm am/pm
     Calendar cal = Calendar.getInstance(Locale.ENGLISH);
     cal.setTimeInMillis(Long.parseLong(timeStamp));
     String dateTime = DateFormat.format("dd/MM/yyyy hh:mm aa", cal).toString();
 
 
 
-
+    //set data
     holder.show_message.setText(chat.getMessage());
     holder.timeTv.setText(dateTime);
 
@@ -85,7 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     } else {
       Glide.with(mContext).load(imageurl).into(holder.profile_image);
     }
-
+    //set seen/delivered status of message
     if (position == mChat.size()-1){
       if (chat.isIsseen()){
         holder.txt_seen.setText("Seen");
@@ -103,8 +109,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     return mChat.size();
   }
 
+  //view holder class
   public  class ViewHolder extends RecyclerView.ViewHolder{
-
+    //views
     public TextView show_message;
     public ImageView profile_image;
     public TextView txt_seen;
@@ -113,6 +120,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public ViewHolder(View itemView) {
       super(itemView);
 
+      //init views
       show_message = itemView.findViewById(R.id.show_message);
       profile_image = itemView.findViewById(R.id.profile_image);
       txt_seen = itemView.findViewById(R.id.txt_seen);

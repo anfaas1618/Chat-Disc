@@ -17,13 +17,39 @@
 
 package cl.ucn.disc.dsm.chatdisc.Model;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 public class Chat {
 
+  /**
+   * The sender.
+   */
   private String sender;
+  /**
+   * The receiver.
+   */
   private String receiver;
+  /**
+   * The message.
+   */
   private String message;
+  /**
+   * The timestamp.
+   */
   private String timestamp;
+
   private boolean isseen;
+
+  /**
+   * The Constructor.
+   *
+   * @param sender
+   * @param receiver
+   * @param message
+   * @param timestamp
+   */
 
   public Chat(String sender, String receiver, String message, boolean isseen, String timestamp) {
     this.sender = sender;
@@ -33,6 +59,7 @@ public class Chat {
     this.timestamp = timestamp;
   }
 
+  //Get's and Set's
   public Chat() {
   }
 

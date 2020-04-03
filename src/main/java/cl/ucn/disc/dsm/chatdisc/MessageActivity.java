@@ -111,6 +111,7 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         final String userid = intent.getStringExtra("userid");
 
+
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

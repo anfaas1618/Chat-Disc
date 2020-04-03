@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc.Fragments;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.media.session.MediaSession.Token;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -90,7 +94,6 @@ public class ChatsFragment extends Fragment {
     return view;
   }
 
-
   private void chatList() {
     mUsers = new ArrayList<>();
     reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -112,7 +115,6 @@ public class ChatsFragment extends Fragment {
 
       @Override
       public void onCancelled(@NonNull DatabaseError databaseError) {
-
       }
     });
   }

@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -68,6 +72,7 @@ public class StartActivity extends AppCompatActivity {
       }
     });
 
+    //handle register button
     register.setOnClickListener(new View.OnClickListener() {
 
       @Override

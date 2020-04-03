@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc.Fragments;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,6 +45,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  A simple {@link Fragment} sublass
+ */
 
 public class UsersFragment extends Fragment {
 
@@ -56,30 +63,33 @@ public class UsersFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
 
+    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_users, container, false);
 
+    //init recyclerview
     recyclerView = view.findViewById(R.id.recycler_view);
+    //it's properties
     recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+    //init user list
     mUsers = new ArrayList<>();
 
+    //get all users
     readUsers();
 
     return view;
-
-
-
 
 
   }
 
 
   private void readUsers() {
-
+    //get current user
     final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    //get path of database named "Users" containing user info
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
+    //get all data from path
     reference.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,13 +100,16 @@ public class UsersFragment extends Fragment {
             assert user !=null;
             assert firebaseUser !=null;
 
+            //get all users except currently signed user
             if (!user.getId().equals(firebaseUser.getUid())) {
               mUsers.add(user);
             }
 
           }
 
-          userAdapter = new UserAdapter(getContext(), mUsers, true);
+          //Adapter
+          userAdapter = new UserAdapter(getContext(), mUsers, false);
+          //Set adapter to recycler view
           recyclerView.setAdapter(userAdapter);
         }
 

@@ -17,6 +17,10 @@
 
 package cl.ucn.disc.dsm.chatdisc;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -112,12 +116,16 @@ public class RegisterActivity extends AppCompatActivity {
             if (task.isSuccessful()){
               //sign in success
               FirebaseUser firebaseUser = auth.getCurrentUser();
+              //Get User email and  uid from auth
               assert firebaseUser != null;
               String userid = firebaseUser.getUid();
 
+              //firebase databse instance and path to store user data named "Users"
               reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-
+              //when user is registered store user info in firebase realtime database too
+              //using HashMap
               HashMap<String, String> hashMap = new HashMap<>();
+              //put info in hashmap
               hashMap.put("id", userid);
               hashMap.put("username", username);
               hashMap.put("imageURL", "default");

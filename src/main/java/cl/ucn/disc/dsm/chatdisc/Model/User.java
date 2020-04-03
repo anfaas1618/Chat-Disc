@@ -17,14 +17,42 @@
 
 package cl.ucn.disc.dsm.chatdisc.Model;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 public class User {
 
+  /**
+   * The id.
+   */
   private String id;
+  /**
+   * The username.
+   */
   private String username;
+  /**
+   * The imageUrl.
+   */
   private String imageURL;
+  /**
+   * The status.
+   */
   private String status;
+  /**
+   * The search.
+   */
   private String search;
 
+  /**
+   * The Constructor.
+   *
+   * @param id
+   * @param username
+   * @param imageURL
+   * @param status
+   * @param search
+   */
   public User(String id, String username, String imageURL, String status, String search) {
     this.id = id;
     this.username = username;
@@ -32,6 +60,8 @@ public class User {
     this.status = status;
     this.search = search;
   }
+
+  //Get's and Set's
 
   public User() {
 

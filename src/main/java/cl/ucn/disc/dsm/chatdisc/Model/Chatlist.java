@@ -17,13 +17,28 @@
 
 package cl.ucn.disc.dsm.chatdisc.Model;
 
+/**
+ * @author Martin Osorio-Bugueño.
+ */
+
 public class Chatlist {
+
+  /**
+   * The id.
+   */
   public String id;
+
+  /**
+   * The Constructor.
+   *
+   * @param id
+   */
 
   public Chatlist(String id) {
     this.id = id;
   }
 
+  //Get's and Set's
   public Chatlist() {
   }
 

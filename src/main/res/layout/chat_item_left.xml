@@ -48,7 +48,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginTop="20dp"
     android:textColor="@color/timeColor"
-    android:textSize="12sp" />
+    android:textSize="10sp" />
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
