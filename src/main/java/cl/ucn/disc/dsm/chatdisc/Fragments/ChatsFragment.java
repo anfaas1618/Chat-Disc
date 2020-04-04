@@ -48,11 +48,15 @@ import java.util.List;
 
 public class ChatsFragment extends Fragment {
 
+  // RecyclerView
   private RecyclerView recyclerView;
 
+  //Adapter
   private UserAdapter userAdapter;
+  //hthe User List
   private List<User> mUsers;
 
+  //FireBase
   FirebaseUser fuser;
   DatabaseReference reference;
 
@@ -63,24 +67,31 @@ public class ChatsFragment extends Fragment {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
+    //the id of RecyclerView in layouts xml
     recyclerView = view.findViewById(R.id.recycler_view);
     recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+  //Get in FireBase
     fuser = FirebaseAuth.getInstance().getCurrentUser();
 
+    //Refrence the user list to array List
     usersList = new ArrayList<>();
 
+    //Get in firebase ChatList his id
     reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid());
+    //Add Values
     reference.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         usersList.clear();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+          //get values in ChatList Class
           Chatlist chatlist = snapshot.getValue(Chatlist.class);
+          //Add in the user list
           usersList.add(chatlist);
         }
-
+        //return the method chatList
         chatList();
       }
 
@@ -93,23 +104,31 @@ public class ChatsFragment extends Fragment {
 
     return view;
   }
-
+  //Method chatList
   private void chatList() {
+    //reference mUsers in a arrayList
     mUsers = new ArrayList<>();
+    //get in Firebase the reference in Users
     reference = FirebaseDatabase.getInstance().getReference("Users");
+    //Add the value
     reference.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         mUsers.clear();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+          //get value in User class
           User user = snapshot.getValue(User.class);
           for (Chatlist chatlist : usersList){
+            //if have the same id
             if (user.getId().equals(chatlist.getId())){
+              //add in mUsers
               mUsers.add(user);
             }
           }
         }
+        //Get UserAdapter
         userAdapter = new UserAdapter(getContext(), mUsers, true);
+        //set he adapter
         recyclerView.setAdapter(userAdapter);
       }
 

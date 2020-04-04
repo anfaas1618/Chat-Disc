@@ -96,13 +96,14 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-
+        //assigned the id of the RecyclerView
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        //assigned The id of the TextView,Image and button in the layout xml
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         btn_send =findViewById(R.id.btn_send);
@@ -115,18 +116,22 @@ public class MessageActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get the message
                 String msg = text_send.getText().toString();
                 if (!msg.equals("")){
+                    //send the message
                     sendMessage(fuser.getUid(), userid, msg);
                 } else {
+                    //if there is a empty message
                     Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
+                //set the text in the message
                 text_send.setText("");
             }
         });
-
+        // the current user
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-
+        //reference users in teh fire base
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -134,13 +139,15 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 username.setText(user.getUsername());
-
+                //if user dont have a profile image
                 if (user.getImageURL().equals("default")){
+                    //the image for default
                     profile_image.setImageResource(R.mipmap.ic_launcher);
                 }else{
+                    //if user have a profile image
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
-
+                //read  the messag whit his profile image
                 readMesagges(fuser.getUid(),userid, user.getImageURL());
 
             }
@@ -155,19 +162,21 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String receiver, String message){
-
+        //data base get instance and reference
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         final String userid = intent.getStringExtra("userid");
         String timestamp = String.valueOf(System.currentTimeMillis());
 
+        //using HashMap
         HashMap<String, Object> hashMap = new HashMap<>();
+        //Put info in HashMap
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message" , message);
         hashMap.put("timestamp", timestamp);
 
         reference.child("Chats").push().setValue(hashMap);
-
+        //Reference ChatList in firebase
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
             .child(fuser.getUid())
             .child(userid);
@@ -176,6 +185,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()) {
+                    //set the Id
                     chatRef.child("id").setValue(userid);
                 }
             }
@@ -189,22 +199,26 @@ public class MessageActivity extends AppCompatActivity {
 
 
     }
-
+    // Read Message
     private void readMesagges(final String myid, final String userid, final String imageurl){
         mchat = new ArrayList<>();
-
+        //Reference Chats in the FireBase
         reference = FirebaseDatabase.getInstance().getReference("Chats");
+        //Add Values
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mchat.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    //Get values in the Chat Class
                     Chat chat = snapshot.getValue(Chat.class);
+                    //if the Id match
                     if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
                         chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
+                        //add
                         mchat.add(chat);
                     }
-
+                    //Adapter
                     messageAdapter = new MessageAdapter(MessageActivity.this, mchat, imageurl);
                     recyclerView.setAdapter(messageAdapter);
                 }
@@ -218,9 +232,11 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void status(String status){
+        //Refrence in Users in fireBase
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
+        //put status in the HashMap
         hashMap.put("status", status);
 
         reference.updateChildren(hashMap);

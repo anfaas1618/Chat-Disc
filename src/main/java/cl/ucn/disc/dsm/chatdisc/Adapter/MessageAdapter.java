@@ -40,16 +40,19 @@ import java.util.List;
 import java.util.Locale;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
-
+  //Message Type
   public static  final int MSG_TYPE_LEFT = 0;
   public static  final int MSG_TYPE_RIGHT = 1;
 
+  //The chat whit his context and profile image
   private Context mContext;
   private List<Chat> mChat;
   private String imageurl;
 
+  //FireBase
   FirebaseUser fuser;
 
+  //Constructor
   public MessageAdapter(Context mContext, List<Chat> mChat, String imageurl){
     this.mChat = mChat;
     this.mContext = mContext;
@@ -131,6 +134,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
   @Override
   public int getItemViewType(int position) {
     fuser = FirebaseAuth.getInstance().getCurrentUser();
+    //Depend of the user who has send the message
     if (mChat.get(position).getSender().equals(fuser.getUid())){
       return MSG_TYPE_RIGHT;
     } else {
