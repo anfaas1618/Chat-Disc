@@ -1,9 +1,13 @@
 # ChatDisc
 
 Chat app whit firebase 
+Author: Martin Osorio
+
+In this video you can see my aplication:
+https://www.youtube.com/watch?v=wvsFeMxp1EE&feature=youtu.be
 
 # RECOMENDATION   
-Dowload the zip , there is the full proyect
+Dowload the Winrar , there is the full proyect(ChatDisc.rar)
 
 ## Table of contents
 
@@ -21,6 +25,7 @@ Dowload the zip , there is the full proyect
 
 
 project designed for the DSM Asignature in the  Ucn of Antofagasta city with the purpose of learning to design mobile applications
+
 
 
 ## Screenshots
