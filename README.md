@@ -7,7 +7,7 @@ In this video you can see my aplication:
 https://www.youtube.com/watch?v=wvsFeMxp1EE&feature=youtu.be
 
 # RECOMENDATION   
-Dowload the Winrar , there is the full proyect(ChatDisc.rar)
+Dowload the rar archive , there is the full proyect(ChatDisc.rar)
 
 ## Table of contents
 
